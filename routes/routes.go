@@ -15,5 +15,5 @@ func SetupRoutes(app *fiber.App) {
 	}, &goMcp.StreamableHTTPOptions{
 		JSONResponse: true,
 	})
-	app.Get("/mcp", adaptor.HTTPHandler(mcpHandler))
+	app.All("/mcp", adaptor.HTTPHandler(mcpHandler))
 }
