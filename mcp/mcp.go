@@ -2,15 +2,22 @@ package mcp
 
 import (
 	goMcp "github.com/modelcontextprotocol/go-sdk/mcp"
+	"github.com/unomcp/JueJin-MCP/juejin"
 )
 
-type MCP struct{}
-
-func NewMCP() *MCP {
-	return &MCP{}
+type MCP struct {
+	JueJin *juejin.JueJin
 }
 
-func InitMCP() *goMcp.Server {
+func NewMCP(jj *juejin.JueJin) *MCP {
+	return &MCP{
+		JueJin: jj,
+	}
+}
+
+func InitMCP(jj *juejin.JueJin) *goMcp.Server {
+	mcpInstance := NewMCP(jj)
+
 	server := goMcp.NewServer(&goMcp.Implementation{
 		Name:    "JueJin-MCP",
 		Version: "0.0.1",
@@ -20,6 +27,6 @@ func InitMCP() *goMcp.Server {
 	goMcp.AddTool(server, &goMcp.Tool{
 		Name:        "login status",
 		Description: "获取登录状态",
-	}, LoginStatus)
+	}, mcpInstance.LoginStatus)
 	return server
 }

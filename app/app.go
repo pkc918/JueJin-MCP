@@ -14,9 +14,15 @@ type App struct {
 }
 
 func NewApp(app *fiber.App) *App {
+	// 先初始化 JueJin
+	jueJinInstance := juejin.NewJueJin()
+
+	// 将 JueJin 实例注入到 MCP 中
+	mcpServer := mcp.InitMCP(jueJinInstance)
+
 	return &App{
-		JueJin:   juejin.NewJueJin(),
-		MCP:      mcp.InitMCP(),
+		JueJin:   jueJinInstance,
+		MCP:      mcpServer,
 		FiberApp: app,
 	}
 }
