@@ -2,14 +2,13 @@ package mcp
 
 import (
 	"context"
-	"fmt"
 
 	goMcp "github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/unomcp/JueJin-MCP/browser"
 	"github.com/unomcp/JueJin-MCP/juejin"
 )
 
-func loginStatusTool(ctx context.Context, _req *goMcp.CallToolRequest, _ any) (
+func loginTool(ctx context.Context, _req *goMcp.CallToolRequest, _ any) (
 	*goMcp.CallToolResult,
 	any,
 	error,
@@ -20,8 +19,9 @@ func loginStatusTool(ctx context.Context, _req *goMcp.CallToolRequest, _ any) (
 	p := b.MustPage()
 	defer p.Close()
 
-	fmt.Println("登录中...")
-	juejin.Login(p, ctx)
+	if err := juejin.Login(p, ctx); err != nil {
+		return nil, nil, err
+	}
 
 	return nil, nil, nil
 }

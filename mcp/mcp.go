@@ -15,11 +15,11 @@ func initMCP() *goMcp.Server {
 		Version: configs.MCPVersion,
 	}, nil)
 
-	// 添加登录状态工具
+	// 添加登录工具
 	goMcp.AddTool(server, &goMcp.Tool{
-		Name:        "login status",
-		Description: "获取登录状态",
-	}, loginStatusTool)
+		Name:        "login",
+		Description: "登录掘金",
+	}, loginTool)
 
 	return server
 }
