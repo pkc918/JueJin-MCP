@@ -12,7 +12,7 @@ import (
 var (
 	LOGIN_URL    = "https://juejin.cn/"
 	LOGIN_BUTTON = `//*[@id="juejin"]/div[1]/div/header/div/nav/ul/ul/li[2]/div/button`
-	USERAVATAR   = `#juejin > div.container.index-container > div > header > div > nav > ul > ul > li.nav-item.menu > div > div > img`
+	USERAVATAR   = `//*[@id="juejin"]/div[1]/div/header/div/nav/ul/ul/li[3]/div/div/img`
 )
 
 func Login(page *rod.Page, ctx context.Context) error {
@@ -22,7 +22,7 @@ func Login(page *rod.Page, ctx context.Context) error {
 
 	time.Sleep(5 * time.Second)
 
-	if exist, el, _ := p.Has(USERAVATAR); exist {
+	if exist, el, _ := p.HasX(USERAVATAR); exist {
 		fmt.Println(el.Describe(0, true))
 		return nil
 	}
