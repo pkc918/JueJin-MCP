@@ -8,6 +8,13 @@ import (
 	"github.com/unomcp/JueJin-MCP/juejin"
 )
 
+// 发布掘金文章
+type PublishContentArgs struct {
+	Title   string `json:"title" jsonschema:"内容标题（掘金限制：最多20个中文字或英文单词）"`
+	Content string `json:"content" jsonschema:"正文内容 限制为（Markdown 格式）"`
+}
+
+// 登录掘金
 func loginTool(ctx context.Context, _req *goMcp.CallToolRequest, _ any) (
 	*goMcp.CallToolResult,
 	any,
@@ -26,7 +33,7 @@ func loginTool(ctx context.Context, _req *goMcp.CallToolRequest, _ any) (
 	return nil, nil, nil
 }
 
-func publishTool(ctx context.Context, _req *goMcp.CallToolRequest, _ any) (
+func publishTool(ctx context.Context, _req *goMcp.CallToolRequest, args PublishContentArgs) (
 	*goMcp.CallToolResult,
 	any,
 	error,
@@ -38,8 +45,8 @@ func publishTool(ctx context.Context, _req *goMcp.CallToolRequest, _ any) (
 	defer p.Close()
 
 	if err := juejin.Publish(p, ctx, juejin.PublishContent{
-		Title:   "Test Title",
-		Content: "## Test Content",
+		Title:   args.Title,
+		Content: args.Content,
 	}); err != nil {
 		return nil, nil, err
 	}
