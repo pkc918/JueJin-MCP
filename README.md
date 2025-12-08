@@ -33,8 +33,28 @@ Cursor 配置: `Settings` -> `Cursor Settings` -> `MCP` -> `Add new global MCP s
 ```
 </details>
 
+<details>
+<summary><b>在 Trae 使用</b></summary>
 
-### 项目结构
+使用“手动添加”功能，并填写该 MCP 服务器的 JSON 配置信息。更多详情，请访问 Trae 文档 。
+
+#### Trae 本地服务连接
+
+```json
+{
+  "mcpServers": {
+    "juejin-mcp": {
+      "type":"sse",
+      "url": "http://localhost:10086/mcp"
+    }
+  }
+}
+```
+</details>
+
+
+### 🌲 项目结构
+
 ```bash
 root/
 ├── main.go               # 🚀 应用入口与引导程序
