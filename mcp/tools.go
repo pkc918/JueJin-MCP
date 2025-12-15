@@ -50,6 +50,7 @@ func publishTool(ctx context.Context, _req *goMcp.CallToolRequest, args PublishC
 		Title:         args.Title,
 		Content:       args.Content,
 		CategoryIndex: args.CategoryIndex,
+		Summary:       args.Summary,
 	}); err != nil {
 		return nil, nil, err
 	}
