@@ -28,7 +28,10 @@ func Publish(page *rod.Page, ctx context.Context, content PublishContent) error 
 
 	writeArticle(p, ctx, content)
 	PublishPanel(page, ctx)
-	SelectorCategoryItem(page, ctx, content.CategoryIndex)
+	if err := SelectorCategoryItem(page, ctx, content.CategoryIndex); err != nil {
+		return err
+	}
+
 	InputSummary(page, ctx, content.Summary)
 
 	time.Sleep(3 * time.Second)
@@ -50,4 +53,6 @@ func writeArticle(page *rod.Page, _ context.Context, content PublishContent) {
 func PublishPanel(page *rod.Page, _ context.Context) {
 	openPanelBtn := page.MustElementX(OPEN_PANEL_BUTTON)
 	openPanelBtn.MustClick()
+	// 等待面板展开后再选择分类
+	time.Sleep(500 * time.Millisecond)
 }

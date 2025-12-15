@@ -2,6 +2,7 @@ package juejin
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/go-rod/rod"
 )
@@ -21,20 +22,31 @@ var CategoryMap = map[int]string{
 	7: "阅读",
 }
 
-func SelectorCategoryItem(page *rod.Page, _ctx context.Context, categoryIndex int) error {
-	// 1. 获取分类列表容器
-	categoryList := page.MustElementX(CATEGORY_LIST)
+func SelectorCategoryItem(page *rod.Page, ctx context.Context, categoryIndex int) error {
+	p := page.Context(ctx)
 
-	// 2. 获取所有分类项
+	// 1. 等待分类列表容器出现并可见
+	categoryList := p.MustElementX(CATEGORY_LIST)
+	categoryList.MustWaitVisible()
+	categoryList.MustWaitStable()
+
+	// 2. 直接获取分类项子元素
 	items := categoryList.MustElements(".item")
+
+	if len(items) == 0 {
+		return fmt.Errorf("分类列表为空，无法选择分类")
+	}
 
 	// 3. 检查索引是否越界
 	if categoryIndex < 0 || categoryIndex >= len(items) {
-		return nil // 或者返回错误，这里暂时忽略越界
+		return fmt.Errorf("分类索引 %d 越界，可用范围: 0-%d", categoryIndex, len(items)-1)
 	}
 
-	// 4. 点击对应索引的分类
-	items[categoryIndex].MustClick()
+	// 4. 等待目标分类项可见并稳定，然后点击
+	targetItem := items[categoryIndex]
+	targetItem.MustWaitVisible()
+	targetItem.MustWaitStable()
+	targetItem.MustClick()
 
 	return nil
 }
