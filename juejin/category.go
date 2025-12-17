@@ -22,11 +22,9 @@ var CategoryMap = map[int]string{
 	7: "阅读",
 }
 
-func SelectorCategoryItem(page *rod.Page, ctx context.Context, categoryIndex int) error {
-	p := page.Context(ctx)
-
+func SelectorCategoryItem(page *rod.Page, _ctx context.Context, categoryIndex int) error {
 	// 1. 等待分类列表容器出现并可见
-	categoryList := p.MustElementX(CATEGORY_LIST)
+	categoryList := page.MustElementX(CATEGORY_LIST)
 	categoryList.MustWaitVisible()
 	categoryList.MustWaitStable()
 
