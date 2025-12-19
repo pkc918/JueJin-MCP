@@ -4,7 +4,7 @@ import goMcp "github.com/modelcontextprotocol/go-sdk/mcp"
 
 var (
 	MCPName                  = "JueJin-MCP"
-	MCPVersion               = "0.0.1"
+	MCPVersion               = "0.0.1-beta"
 	MCPStreamableHTTPOptions = &goMcp.StreamableHTTPOptions{
 		JSONResponse: true,
 	}
